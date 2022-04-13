@@ -1,9 +1,11 @@
-package rest.service;
+package rest.service.impl;
 
 import org.springframework.stereotype.Service;
 import repository.UserRepository;
 import rest.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import rest.service.UserService;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
 
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void create(User user) {
@@ -37,7 +41,7 @@ public class UserServiceImpl implements UserService {
     public boolean update(User user, int id) {
         if(userRepository.existsById(id)) {
             user.setId(id);
-            userRepository.save(user)
+            userRepository.save(user);
             return true;
         }
         return false;

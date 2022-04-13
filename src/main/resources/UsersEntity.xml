@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="Entity.UsersEntity">
+        <table name="users" schema="public" catalog="postgres"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="username">
+                <column name="username" nullable="false"/>
+            </basic>
+            <basic name="surname">
+                <column name="surname" nullable="false"/>
+            </basic>
+            <basic name="addr">
+                <column name="addr" nullable="false"/>
+            </basic>
+            <basic name="phone">
+                <column name="phone" nullable="false"/>
+            </basic>
+            <basic name="mail">
+                <column name="mail" nullable="false"/>
+            </basic>
+        </attributes>
+    </entity>
+</entity-mappings>

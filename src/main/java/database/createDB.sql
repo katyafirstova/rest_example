@@ -1,13 +1,11 @@
 --
--- drop sequence if exists user_seq;
+create sequence user_seq
+    increment by 1
+    no maxvalue
+    no minvalue
+    cache 1;
 
--- create sequence user_seq
---     increment by 1
---     no maxvalue
---     no minvalue
---     cache 1;
-
-create table if not exists users(id integer default nextval('user') not null primary key,
+create table if not exists users(id integer default nextval('user_seq') not null primary key,
                            username text,
                            surname text,
                            addr text,
