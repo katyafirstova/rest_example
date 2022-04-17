@@ -15,46 +15,29 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @Resource
-    @Qualifier("userserivce")
-    public final UserService userService;
+    @Autowired
+    UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    @RequestMapping(value = "/getUsers", method = RequestMethod.GET, headers = "Accept=application/json")
+    public List getUsers() {
+        List listOfUsers = userService.getUsers();
+        return listOfUsers;
     }
 
-    @PostMapping(value = "/users")
-    public ResponseEntity<?> create(@RequestBody User user) {
-        userService.create(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    @RequestMapping(value = "/addUser", method = RequestMethod.POST, headers = "Accept=application/json")
+    public void addUser(@RequestBody User user) {
+        userService.addUser(user);
     }
 
-    @GetMapping(value = "/users")
-    public ResponseEntity<List<User>> read() {
-        final List<User> users = userService.readAll();
-        return users != null && !users.isEmpty() ? new ResponseEntity<>(users, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @RequestMapping(value = "/update", method = RequestMethod.PUT, headers = "Accept=application/json")
+    public void updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+
     }
 
-    @GetMapping(value = "/users/{id}")
-    public ResponseEntity<User> read(@PathVariable(name = "id") int id) {
-        final User user = userService.read(id);
-
-        return user != null ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @PutMapping(value = "/users/{id}")
-    public ResponseEntity<User> update(@PathVariable(name = "id") int id, @RequestBody User user) {
-        final boolean updated = userService.update(user, id);
-        return updated ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<User> delete(@PathVariable(name = "id") int id) {
-        final boolean deleted = userService.delete(id);
-        return deleted ? new ResponseEntity<>(HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
+    @RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    public void deleteUser(@PathVariable(name = "id") int id) {
+        userService.deleteUser(id);
     }
 
 }
